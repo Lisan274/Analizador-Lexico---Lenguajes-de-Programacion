@@ -12,6 +12,7 @@ demas elementos de un lenguaje de programacion, Se uso el compilador minGW 6.3.0
 como Code y Sublime.
 */
 
+
 #include <ctype.h>//Sirve para isdigit y isalpha
 #include <stdlib.h>//Sirve para el system(pause)
 #include <stdbool.h>//SIRVE PARA LOS bool
@@ -21,7 +22,7 @@ como Code y Sublime.
 
 //using namespace std;
 void buscarRESERVADOSID();
-const char *pal_reser[]={"inicio","fin","mientras", "para","si", "sino","entero", "caracter", "decimal", "imprimir"};//arreglo que contiene todas las palabras reservadas permitidas
+const char *pal_reser[]={"inicio","sino","entrada_datos","fin","cambiar","descanso","ciclo","retornar","funcionMain","nombre","hacer mientras","para","mientras","donde", "para","si","entero", "caracter","retorno", "decimal", "imprimir","fin",};//arreglo que contiene todas las palabras reservadas permitidas
 int tamIndicador=sizeof(pal_reser)/sizeof(char *);
 char identificador[100];
 
@@ -35,6 +36,7 @@ int main(){
 	bool palabra_detec = false;
 	file = fopen(fichero,"r");
 	int cont;
+	
 	//ifstream file(fichero.c_str(), ios:: in ); //Abriendo el archivo
 	if (file == NULL) //Si no se encuentra el archivo
 		printf("\nEl fichero no existe!! \n\n");
@@ -42,59 +44,60 @@ int main(){
 	else{ //Si encuentra el archivo
 		while((c = fgetc(file)) != EOF){
 			printf("%c",c);
-			
-			//while (!file.eof())
-			//Ejecutar� el siguiente bloque hasta que llegue al final del archivo
-			//c = file.get(); //Obteniendo caracter del archivo.
-			//cout << letra;
-			if(verificador == "=" && c!= '='){
-				//printf("<tkn_asignacion> ");
+		
+			if(verificador == " = " && c!= '='){
+				
 				estado='A';
 				verificador="";
 			}
 			if((verificador=="<"&&(c!='>' || c!='=')) || (verificador==">" && c!='=')){
-				printf("<tkn_comparador>");
+				printf(" <token_comparador> ");
 				estado='A';
 				verificador="";
 			}
-			if(verificador==">" && c == '>'){
-				printf("<tkn_simbolo>");
+			if(verificador==" > " && c == '>'){
+				printf(" <token_simbolo> ");
 				estado='A';
 				verificador="";
 				continue;
 			}
 			if(verificador=="\"" && c=='"'){
-				printf("<tkn_cadena>");
+				printf(" <token_cadena> ");
 				estado='A';
 				verificador="";
 				continue;
 			}
 			if(estado=='F' && !(isdigit(c)) && c!='.'){
-				//printf("<tkn_entero>");
+				
 				estado='A';
-				//verificador="";
+				
 			}
 			if(estado=='G' && ((c)<='0' || (c)>='9')){
-				printf("<tkn_decimal>");
+				printf(" <token_decimal> ");
 				estado='A';
 				verificador="";
 			}
+			char x;
 			
 			if((estado=='H') && !(isalpha(c)) && !(isdigit(c))){
 				for(int cont=0; cont < 12; cont++){
-					if(pal_reser[cont] == verificador){
-						palabra_detec=true;
-						break;
+					if(pal_reser[0] =="inicio"){
+						printf("TOKEN RESERVADO");
+					}else{
+						if(pal_reser[1] =="sino"){
+							printf(" TOKEN RESERVADO ");
+						}else{
+							printf(" <token_identificador> ");
+						}
 					}
+					break;
 				}
 				if(palabra_detec){
 					if(verificador=="entero" || verificador=="decimal" || verificador=="cadena"){
 						strcpy("tipo_" ,verificador );
-						//	verificador="tipo_"+verificador;
+						
 					}
-					printf("<tkn_%s>",verificador);
-				}else{
-					printf("<tkn_identificador>");
+					printf(" <token_%s> ",verificador);
 				}
 				palabra_detec=false;
 				if(verificador=="fin"){
@@ -111,35 +114,31 @@ int main(){
 					verificador = verificador + c;
 				}else if (c == '+' || c == '-' || c == '*' || c == '/'){
 					estado = 'C';
-					/*printf("<tkn_aritmetico>");
-					estado = 'A';*/
+					
 				}else if(c == '<' || c == '>'|| c == '=='){
 					estado= 'I';
-					/*printf("<tkn_relacional>");//Este lo imprime directo
-					estado = 'A';*/
+					
 					verificador = verificador + c;
 				}else if (c==';'){
 					estado = 'M';
-					printf("<tkn_punto_coma>");
-					//estado = 'A';
+					printf(" <token_punto_coma> ");
+					
 				}else if (c=='{' || c=='}'){
 					estado='M';
-					printf("<tkn_llave>");
+					printf(" <token_llave> ");
 					//estado='A';
 				}else if (c=='(' || c==')'){
 					estado='M';
-					printf("<tkn_parentesis>");
+					printf(" <token_parentesis> ");
 					estado='A';
 				}else if (c=='[' || c==']'){
 					estado='M';
-					printf("<tkn_corchetes>");
+					printf(" <token_corchetes> ");
 					estado='A';
 				}
 				else if(c=='"'){
 					estado = 'J';
-					//printf("<tkn_Comillas>");
-					//estado='A';
-					//verificador = verificador + c;
+					
 				}else if(isdigit(c)){
 					estado = 'F';
 					verificador=verificador+c;
@@ -152,28 +151,28 @@ int main(){
 					estado = 'A';
 				}
 				else{
-					printf("<tkn_simbolo>");
-					//estado = 'A';
+					printf(" <token_simbolo> ");
+					
 				}
 				break;
 				case 'B':
-					printf("<tkn_asignacion>");
+					printf(" <token_asignacion> ");
 					estado = 'A';
 					verificador="";
 					break;
 				case 'C':
-					printf("<tkn_aritmetico>");
+					printf(" <token_aritmetico> ");
 					estado = 'A';
 					break;
 				case 'E':
 					estado = 'N';
 					estado = 'A';
-					printf("<tkn_comparacion>");
+					printf(" <token_comparacion> ");
 					verificador="";
 					break;
 				case 'F':
 					if(c!='.'){
-						printf("tkn_entero");
+						printf(" token_entero ");
 						estado='A';
 					}else{
 						estado='G';
@@ -185,18 +184,19 @@ int main(){
 					verificador=verificador+c;
 					break;
 				case 'H':
-					verificador=verificador+c;
+					//verificador=verificador+c;
+					buscarRESERVADOSID;
 					break;
 				case 'I':
-					printf("<tkn_relacional>");
+					printf(" <token_relacional> ");
 					estado = 'A';
 					break;
 				case 'J':
-					printf("<tkn_Comillas>");
+					printf(" <token_Comillas> ");
 					estado = 'A';
 					break;
 				case 'M':
-					//printf(" tkn_agrupacion");
+					
 					estado='A';
 					verificador=verificador+c;
 					break;
@@ -206,6 +206,8 @@ int main(){
 					break;
 				default:
 					break;
+					
+				
 			}
 			
 		}
@@ -220,7 +222,7 @@ int main(){
 			identificador[0]='\0';
 			break;
 		}
-		//if(i==(tamIndicador)-1){printf("<Tkn_ID>");}
+		
 		if(i==(tamIndicador)-1){printf("\nError no hay ID");exit(-1);}
 	}
 }
