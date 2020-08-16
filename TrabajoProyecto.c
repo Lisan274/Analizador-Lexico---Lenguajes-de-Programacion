@@ -5,6 +5,11 @@ Daniel José Chavarría - 20141005789
 Eber Josue Dominguez - 20141004595
 Yoselin Dayriela Montes - 20121012555
 Yolani Marieli Madrid - 20131004973
+
+Descripcion: El siguiente proyecto esta basado en la creacion de un analizador lexico, tomando en cuenta el funcionamiento de este
+busca que atraves del lenguaje C descomponer una entrada de texto y analizarla en busqueda de palabras reservadas, tipos de datos, y 
+demas elementos de un lenguaje de programacion, Se uso el compilador minGW 6.3.0, ademas del uso del IDE Zinjai y de editores de texto
+como Code y Sublime.
 */
 
 #include <ctype.h>//Sirve para isdigit y isalpha
