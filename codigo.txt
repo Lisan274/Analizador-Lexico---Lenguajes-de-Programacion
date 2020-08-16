@@ -1,0 +1,24 @@
+inicio
+función nombre(entero variable, entero variable, entero variable);
+funcionMain {
+entero variable, variable, variable ;
+imprimir << ( “Texto”);
+entrada_datos >> variable >> variable >> variable >> variable ;
+variable = función (variable , variable, variable) ;
+imprimir << ( “Texto”) << variable ;
+entrada_datos . función() ;
+retorno 0;
+}
+función nombre (entero variable, entero variable, entero variable);
+{
+entero variable ;
+si(variable < variable);
+si (variable < variable);
+vaiable = variable;
+sino
+si (variable < variable)
+variable = variable;
+sino
+variable = variable;
+retorno variable;
+}
